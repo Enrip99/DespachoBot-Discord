@@ -3,6 +3,8 @@ FROM ubuntu:18.04
 RUN apt-get update -y
 RUN apt-get upgrade -y
 
+RUN curl -sL https://deb.nodesource.com/setup_14.x | sudo bash -
+
 RUN apt-get install nodejs -y
 RUN apt-get install npm -y
 
@@ -21,7 +23,7 @@ WORKDIR /usr/src/app
 # where available (npm@5+)
 COPY package*.json ./
 
-RUN npm update
+RUN npm install
 # If you are building your code for production
 # RUN npm ci --only=production
 
