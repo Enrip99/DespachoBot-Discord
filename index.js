@@ -46,6 +46,7 @@ client.on('message', message => {
       .setImage('attachment://Foto.png');
 		message.channel.send(ToSend);
     } catch (error) {
+message.channel.send('No webcam detected');
       console.error(error)
     }
 	}
