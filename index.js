@@ -34,7 +34,10 @@ client.on('message', message => {
 
 
 	if (ms === 'alguien despacho' || ms === 'alguien despacho?'){
-		Webcam.capture( "data/Foto", function( err, data ) {} );
+		Webcam.capture( "data/Foto", function( err, data ) {
+      if (!err) console.log(data)
+      else console.error(err);
+    } );
 		var start = new Date().getTime();
 		var end = start;
 		while(end < start + 3000) {
