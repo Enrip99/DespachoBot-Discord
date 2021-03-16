@@ -1,6 +1,7 @@
 FROM node:14-alpine
 
-RUN apk add fswebcam
+RUN apk update\
+    && apk add fswebcam
 
 # Create app directory
 WORKDIR /usr/src/app
