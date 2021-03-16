@@ -40,7 +40,7 @@ client.on('message', message => {
     } );
 		var start = new Date().getTime();
 		var end = start;
-		while(end < start + 3000) {
+		while(end < start + 5000) {
 			end = new Date().getTime();
 		}
         const ToSend = new Discord.MessageEmbed()
