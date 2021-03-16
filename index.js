@@ -37,7 +37,7 @@ client.on('message', message => {
 		Webcam.capture( "data/Foto", function( err, data ) {} );
 		var start = new Date().getTime();
 		var end = start;
-		while(end < start + 1000) {
+		while(end < start + 3000) {
 			end = new Date().getTime();
 		}
         const ToSend = new Discord.MessageEmbed()
