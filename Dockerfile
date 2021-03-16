@@ -1,4 +1,6 @@
-FROM node:14
+FROM node:14-alpine
+
+RUN apt-get install fswebcam
 
 # Create app directory
 WORKDIR /usr/src/app
