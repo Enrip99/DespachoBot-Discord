@@ -1,9 +1,18 @@
-FROM node:14-alpine
+FROM ubuntu:18.04
 
-RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+RUN apt-get update -y
+RUN apt-get upgrade -y
 
-RUN apk update\
-    && apk add fswebcam
+RUN apt-get install nodejs -y
+RUN apt-get install nodejs-legacy -y
+RUN apt-get install npm -y
+
+#RUN apt-get upgrade && apt install nodejs && apt-get install fswebcam
+
+#RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+
+#RUN apk update\
+#    && apk add fswebcam
 
 # Create app directory
 WORKDIR /usr/src/app
