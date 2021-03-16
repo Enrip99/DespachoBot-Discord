@@ -10,7 +10,7 @@ var opts = {
     width: 640,
     height: 480,
     quality: 50,
-    frames: 30,
+    frames: 1,
     delay: 0,
     saveShots: true,
     output: "png",
@@ -37,7 +37,7 @@ client.on('message', message => {
 		Webcam.capture( "data/Foto", function( err, data ) {} );
 		var start = new Date().getTime();
 		var end = start;
-		while(end < start + 5000) {
+		while(end < start + 1000) {
 			end = new Date().getTime();
 		}
 		const ToSend = new Discord.MessageEmbed()
