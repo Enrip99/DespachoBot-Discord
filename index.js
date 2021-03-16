@@ -40,10 +40,14 @@ client.on('message', message => {
 		while(end < start + 1000) {
 			end = new Date().getTime();
 		}
-		const ToSend = new Discord.MessageEmbed()
-		.attachFiles(['./data/Foto.png'])
-		.setImage('attachment://Foto.png');
+    try {
+      const ToSend = new Discord.MessageEmbed()
+      .attachFiles(['./data/Foto.png'])
+      .setImage('attachment://Foto.png');
 		message.channel.send(ToSend);
+    } catch (error) {
+      console.error(error)
+    }
 	}
 
 
