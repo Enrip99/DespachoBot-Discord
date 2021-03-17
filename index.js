@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 var NodeWebcam = require( "node-webcam" );
 const fs = require('fs');
-const token = require('./data/token.json');
+const config = require('./data/config.json');
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
 
@@ -54,6 +54,11 @@ client.on('message', message => {
         message.channel.send(ToSend).catch(e => {console.error(e)});
 	}
 
+  else if (ms === 'shut off' && (message.author.id === config.owner1 || message.author.id === config.owner2)) {
+    console.log('Apagando...');
+    process.exit();
+  }
+
 
   else if (ms === '7f'){
     message.channel.send('** **- Para ver una foto del despacho, escribe `alguien despacho?` y espera un segundo.\n - Otros comandos graciosos son: `ping`, `mistetas`, `nep`, `upclink`.\n - Este bot ha sido desarrollado y mantenido por un gilipollas - https://github.com/Enrip99/DespachoBot-Discord');
@@ -88,4 +93,4 @@ client.on('message', message => {
 
 });
 
-client.login(token.token);
+client.login(config.token);
