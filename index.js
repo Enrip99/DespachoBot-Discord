@@ -43,6 +43,11 @@ client.on('message', message => {
 		while(end < start + 7000) {
 			end = new Date().getTime();
 		}
+
+    fs.stat('./data/Foto.png', (err, stats) => {
+    message.channel.send('Esta foto fue tomada en: ' + stats.mtime);
+  });
+
         const ToSend = new Discord.MessageEmbed()
         .attachFiles(['./data/Foto.png'])
         .setImage('attachment://Foto.png');
