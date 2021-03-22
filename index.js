@@ -3,7 +3,6 @@ const client = new Discord.Client();
 var NodeWebcam = require( "node-webcam" );
 const fs = require('fs');
 const config = require('./data/config.json');
-const delay = ms => new Promise(res => setTimeout(res, ms));
 
 
 var opts = {
@@ -23,8 +22,8 @@ var Webcam = NodeWebcam.create( opts );
 
 
 client.once('ready', () => {
-  console.log('Ready!');
-  client.user.setActivity('type 7F for help', );
+  console.log('¡Listo!');
+  client.user.setActivity('Type 7F for help', );
 });
 
 
@@ -42,11 +41,9 @@ client.on('message', message => {
         else console.error(err);
       } );
 
-      var start = new Date().getTime();
-      var end = start;
-      while(end < start + 1500) {
-        end = new Date().getTime();
-      }
+      var current = new Date().getTime();
+      var goal = current + parseInt(config.delay);
+      while (current < goal) current = new Date().getTime();
 
       fs.stat('./data/Foto.png', (err, stats) => {
         message.channel.send('Esta foto fue tomada en: ' + stats.mtime);
