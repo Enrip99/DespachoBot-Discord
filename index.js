@@ -44,7 +44,7 @@ client.on('message', message => {
 
       var start = new Date().getTime();
       var end = start;
-      while(end < start + 1000) {
+      while(end < start + 1500) {
         end = new Date().getTime();
       }
 
