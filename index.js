@@ -61,7 +61,7 @@ client.on('message', message => {
 
 
   else if (ms === 'shut off') {
-    if (message.author.id === config.owner1 || message.author.id === config.owner2){}
+    if (message.author.id === config.owner1 || message.author.id === config.owner2){
     console.log('Apagando...');
     process.exit();
   }
