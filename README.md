@@ -2,8 +2,16 @@
 
 Discord bot that upon command, takes a picture through a webcam and sends it through that same channel. It also includes miscelaneous response commands.
 
-# SETUP
-Before starting the bot, create a directory called `data`, and inside it add a file named `token.json`.
-Fill with your bot's token so it has the following contents `{ "token":"your discord bot token goes here"}`
+## SETUP
 
-Run `https://github.com/Enrip99/DespachoBot-Discord`
+Run `sudo ./init.sh` on your terminal.
+
+Edit the `config.json` file and fill in all camps with the required id's.
+ - `owner1` and `owner2` are the id's of the users that will be able to shut down the bot via the `shut off` command.
+ - `token` is your bot's token. You can obtain it in the [Discord developer portal](https://discord.com/developers/).
+ - `serveid` is the id of the server where you'll be runing the bot. For privacy reasons, the bot can only send images to one server. To use the bot in more than one server at a time, you must run multiple instances of the bot.
+Once you've filled everything, copy the `config.json` inside the `data` directory.
+
+You can now run the bot by entering `launch.sh` in your terminal.
+
+`https://github.com/Enrip99/DespachoBot-Discord`
