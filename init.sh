@@ -1,3 +1,3 @@
 apt-get install fswebcam
 npm install
-nom update
+npm update
