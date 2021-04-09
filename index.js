@@ -49,18 +49,27 @@ client.on('message', message => {
 
       fs.stat('./data/Foto.png', (err, stats) => {
 
-        var picTstamp = stats.mtime.getTime();
-        var timeNow = new Date().getTime();
+        var errMsg = '**Se ha producido un error al tomar la foto.**\nComprueba que la cámara funcione correctamente o que el delay establecido sea suficientemente grande.'
 
-        if (timeNow - picTstamp > parseInt(config.delay)*3){
-          message.channel.send('**Se ha producido un error al tomar la foto.**\nComprueba que la cámara funcione correctamente o que el delay establecido sea suficientemente grande.')
+        if (err){
+          message.channel.send(errMsg)
         }
+
         else{
-          const ToSend = new Discord.MessageEmbed()
-          ToSend.attachFiles(['./data/Foto.png'])
-          ToSend.setImage('attachment://Foto.png');
-          message.channel.send(ToSend).catch(e => {console.error(e)});
+          var picTstamp = stats.mtime.getTime();
+          var timeNow = new Date().getTime();
+
+          if (timeNow - picTstamp > parseInt(config.delay)*3){
+            message.channel.send(errMsg)
+          }
+          else{
+            const ToSend = new Discord.MessageEmbed()
+            ToSend.attachFiles(['./data/Foto.png'])
+            ToSend.setImage('attachment://Foto.png');
+            message.channel.send(ToSend).catch(e => {console.error(e)});
+          }
         }
+
       });
     }
   }
