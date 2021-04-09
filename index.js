@@ -37,40 +37,13 @@ client.on('message', message => {
     }
     else{
       Webcam.capture( "data/Foto", function( err, data ) {
-        if (!err) console.log(data)
-        else console.error(err);
-      } );
-
-      var current = new Date().getTime();
-      var goal = current + parseInt(config.delay);
-      while (current < goal) current = new Date().getTime();
-
-
-
-      fs.stat('./data/Foto.png', (err, stats) => {
-
-        var errMsg = '**Se ha producido un error al tomar la foto.**\nComprueba que la cámara funcione correctamente o que el delay establecido sea suficientemente grande.'
-
         if (err){
-          message.channel.send(errMsg)
+          message.channel.send('**Se ha producido un error al tomar la foto.**\nComprueba que la cámara funcione correctamente.')
         }
-
-        else{
-          var picTstamp = stats.mtime.getTime();
-          var timeNow = new Date().getTime();
-
-          if (timeNow - picTstamp > parseInt(config.delay)*3){
-            message.channel.send(errMsg)
-          }
-          else{
-            const ToSend = new Discord.MessageEmbed()
-            ToSend.attachFiles(['./data/Foto.png'])
-            ToSend.setImage('attachment://Foto.png');
-            message.channel.send(ToSend).catch(e => {console.error(e)});
-          }
+        else {
+          message.channel.send({files: ["data/Foto.png"]}).catch(e => {console.error(e)});
         }
-
-      });
+      } );
     }
   }
 
@@ -87,13 +60,7 @@ client.on('message', message => {
 
 
   else if (ms === '7f'){
-    var delay_s = parseInt((parseInt(config.delay)+500)/1000)
-    var secText = "segundos"
-    if (delay_s <= 1){
-      delay_s = "un"
-      secText = "segundo"
-    }
-    message.channel.send('** **- Para ver una foto del despacho, escribe `alguien despacho?` y espera ' + delay_s + ' ' + secText + '.\n - Para apagar el bot utiliza el comando `shut off`\n - Otros comandos graciosos son: `ping`, `mistetas`, `nep`, `upclink`.\n - Este bot ha sido desarrollado y mantenido por un gilipollas - https://github.com/Enrip99/DespachoBot-Discord');
+    message.channel.send('** **- Para ver una foto del despacho, escribe `alguien despacho?` y espera un segundo.\n - Para apagar el bot utiliza el comando `shut off`\n - Otros comandos graciosos son: `ping`, `mistetas`, `nep`, `upclink`.\n - Este bot ha sido desarrollado y mantenido por un gilipollas - https://github.com/Enrip99/DespachoBot-Discord');
   }
 
 

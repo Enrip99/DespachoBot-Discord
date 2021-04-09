@@ -10,7 +10,6 @@ Edit the `config.json` file and fill in all camps with the required id's.
  - `owner1` and `owner2` are the id's of the users that will be able to shut down the bot via the `shut off` command.
  - `token` is your bot's token. You can obtain it in the [Discord developer portal](https://discord.com/developers/).
  - `serverid` is the id of the server where you'll be runing the bot. For privacy reasons, the bot can only send images to one server. To use the bot in more than one server at a time, you must run multiple instances of the bot.
- - `delay` is the time in miliseconds that the bot will wait before sending an image. Some webcams, specially old ones, can take a while to process an image, so adjsut the delay time to ensure that the picture is fully processed before the bot attempts to send it. Unless you're running on really old hardware, 1500 or 2000 miliseconds should be enough.
 Once you've filled everything, copy the `config.json` inside the `data` directory.
 
 You can now run the bot by entering `launch.sh` in your terminal.
