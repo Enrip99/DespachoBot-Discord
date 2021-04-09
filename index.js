@@ -53,7 +53,7 @@ client.on('message', message => {
         var timeNow = new Date().getTime();
 
         if (timeNow - picTstamp > parseInt(config.delay)*3){
-          message.channel.send('**Se ha producido un error al tomar la foto.**\nComprueba que la cámara funcione correctamente.')
+          message.channel.send('**Se ha producido un error al tomar la foto.**\nComprueba que la cámara funcione correctamente o que el delay establecido sea suficientemente grande.')
         }
         else{
           const ToSend = new Discord.MessageEmbed()
@@ -78,7 +78,13 @@ client.on('message', message => {
 
 
   else if (ms === '7f'){
-    message.channel.send('** **- Para ver una foto del despacho, escribe `alguien despacho?` y espera un segundo.\n - Para apagar el bot utiliza el comando `shut off`\n - Otros comandos graciosos son: `ping`, `mistetas`, `nep`, `upclink`.\n - Este bot ha sido desarrollado y mantenido por un gilipollas - https://github.com/Enrip99/DespachoBot-Discord');
+    var delay_s = parseInt((parseInt(config.delay)+500)/1000)
+    var secText = "segundos"
+    if (delay_s <= 1){
+      delay_s = "un"
+      secText = "segundo"
+    }
+    message.channel.send('** **- Para ver una foto del despacho, escribe `alguien despacho?` y espera ' + delay_s + ' ' + secText + '.\n - Para apagar el bot utiliza el comando `shut off`\n - Otros comandos graciosos son: `ping`, `mistetas`, `nep`, `upclink`.\n - Este bot ha sido desarrollado y mantenido por un gilipollas - https://github.com/Enrip99/DespachoBot-Discord');
   }
 
 
