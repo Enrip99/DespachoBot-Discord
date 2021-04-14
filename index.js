@@ -76,10 +76,7 @@ client.on('message', message => {
 
   else if (ms === 'upclink'){
     if (Math.random() < 0.1){
-      const ToSend = new Discord.MessageEmbed()
-      .attachFiles(['./resources/klink.png'])
-      .setImage('attachment://klink.png');
-      message.channel.send(ToSend);
+      message.channel.send({files: ["resources/klink.png"]})
     }
     else message.channel.send('QUE TIENE UNA K QUE TIENE UNA K');
   }
