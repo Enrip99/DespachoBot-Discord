@@ -23,12 +23,12 @@ module.exports = {
 				message.channel.send('No estás en el servidor correcto.')
 			}
 			else{
-				Webcam.capture( "../data/Foto", function( err, data ) {
+				Webcam.capture( "data/Foto", function( err, data ) {
 					if (err){
 						message.channel.send('**Se ha producido un error al tomar la foto.**\nComprueba que la cámara funcione correctamente.')
 					}
 					else {
-						message.channel.send({files: ["../data/Foto.png"]}).catch(e => {console.error(e)});
+						message.channel.send({files: ["data/Foto.png"]}).catch(e => {console.error(e)});
 					}
 				} );
 			}
