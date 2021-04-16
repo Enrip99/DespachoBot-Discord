@@ -1,10 +1,10 @@
 const Discord = require('discord.js');
-const client = new Discord.Client();
-var NodeWebcam = require( "node-webcam" );
 const fs = require('fs');
 const config = require('./data/config.json');
 
+const client = new Discord.Client();
 
+var NodeWebcam = require( "node-webcam" );
 var opts = {
   width: 640,
   height: 480,
@@ -17,14 +17,15 @@ var opts = {
   callbackReturn: "location",
   verbose: false
 };
-
 var Webcam = NodeWebcam.create( opts );
+
 
 
 client.once('ready', () => {
   console.log('¡Listo!');
   client.user.setActivity('Type 7F for help', );
 });
+
 
 
 client.on('message', message => {
@@ -80,6 +81,7 @@ client.on('message', message => {
     }
     else message.channel.send('QUE TIENE UNA K QUE TIENE UNA K');
   }
+
 
   else if (ms === 'ping'){
     message.channel.send(Date.now() - message.createdTimestamp + ' milisegundos'); //miliseconds
