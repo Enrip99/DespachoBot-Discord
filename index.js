@@ -10,23 +10,6 @@ for (const file of commandFiles) {
   client.commands.set(command.name, command);
 }
 
-/*
-var NodeWebcam = require( "node-webcam" );
-var opts = {
-  width: 640,
-  height: 480,
-  quality: 50,
-  frames: 1,
-  delay: 0,
-  saveShots: true,
-  output: "png",
-  device: false,
-  callbackReturn: "location",
-  verbose: false
-};
-var Webcam = NodeWebcam.create( opts );
-*/
-
 client.once('ready', () => {
   console.log('¡Listo!');
   client.user.setActivity('Type 7F for help', );
