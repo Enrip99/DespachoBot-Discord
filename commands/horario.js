@@ -125,6 +125,7 @@ function check_dia_hora(dia, hora, message, client){
 	var msgToSend = ""
 	for (i = 0; i < calendar.hor[dia][hora].length; ++i){
 		client.users.fetch(String(calendar.hor[dia][hora][i])).then(usr =>{
+			if (msgToSend == "") msgToSend = "A esa hora estarán presentes:"
 			msgToSend = msgToSend.concat("\n",usr.username)
 			++count
 			if (count == calendar.hor[dia][hora].length) message.channel.send(msgToSend)
