@@ -17,7 +17,7 @@ const config = require('../data/config.json');
 module.exports = {
 	name: 'alguien',
 	description: 'Main feature of the bot. Takes a picture through webcam and sends it',
-	execute(message, args) {
+	execute(message, args, client) {
 		if (args.length == 1) {
 			var desp = args[0].toLowerCase();
 			if (desp === 'despacho' || desp === 'despacho?') {

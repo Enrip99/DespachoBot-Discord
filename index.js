@@ -24,7 +24,7 @@ client.on('message', message => {
   if (!client.commands.has(command)) return;
 
   try {
-    client.commands.get(command).execute(message, args);
+    client.commands.get(command).execute(message, args, client);
   } catch (error) {
     console.error(error);
   }
