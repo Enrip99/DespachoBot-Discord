@@ -9,65 +9,65 @@ function help_message(message){
 }
 
 function validate_day(day){
-		switch(day) {
-			case 'l':
-				return 0
-				break
-			case 'lunes':
-				return 0
-				break
+	switch(day) {
+		case 'l':
+		return 0
+		break
+		case 'lunes':
+		return 0
+		break
 
-			case 'm':
-				return 1
-				break
-			case 'martes':
-				return 1
-				break
+		case 'm':
+		return 1
+		break
+		case 'martes':
+		return 1
+		break
 
-			case 'x':
-				return 2
-				break
-			case 'miercoles':
-				return 2
-				break
-			case 'miércoles':
-				return 2
-				break
+		case 'x':
+		return 2
+		break
+		case 'miercoles':
+		return 2
+		break
+		case 'miércoles':
+		return 2
+		break
 
-			case 'j':
-				return 3
-				break
-			case 'jueves':
-				return 3
-				break
+		case 'j':
+		return 3
+		break
+		case 'jueves':
+		return 3
+		break
 
-			case 'v':
-				return 4
-				break
-			case 'viernes':
-				return 4
-				break
+		case 'v':
+		return 4
+		break
+		case 'viernes':
+		return 4
+		break
 
-			case 's':
-				return 5
-				break
-			case 'sabado':
-				return 5
-				break
-			case 'sábado':
-				return 5
-				break
+		case 's':
+		return 5
+		break
+		case 'sabado':
+		return 5
+		break
+		case 'sábado':
+		return 5
+		break
 
-			case 'd':
-				return 6
-				break
-			case 'domingo':
-				return 6
-				break
+		case 'd':
+		return 6
+		break
+		case 'domingo':
+		return 6
+		break
 
-			default:
-				return -1
-				break
+		default:
+		return -1
+		break
 	}
 	return -1
 }
@@ -213,44 +213,49 @@ module.exports = {
 	name: 'horario',
 	description: 'guarda y genera el horario de diversos usuarios',
 	execute(message, args, client) {
-		if (!args.length){
-			help_message(message)
+		if (message.guild === null || message.guild != config.serverid){
+			message.channel.send("No estás en el servidor correcto")
 		}
 		else{
-			switch (args[0]){
-				case "add":
-					add_delete(args, message, true)
-					break
+			if (!args.length){
+				help_message(message)
+			}
+			else{
+				switch (args[0]){
+					case "add":
+						add_delete(args, message, true)
+						break
 
-				case "remove":
-					add_delete(args, message, false)
-					break
+					case "remove":
+						add_delete(args, message, false)
+						break
 
-				case "check":
-					check(args, message, client)
-					break
+					case "check":
+						check(args, message, client)
+						break
 
-				case "wipe":
-					if (args.length == 2 && args[1] == "--confirm"){
-						if (message.author.id == config.owner1 || message.author.id == config.owner2){
-							for (var i = 0; i < calendar.hor.length; ++i){
-								for (var j = 0; j < calendar.hor[i].length; ++j){
-									calendar.hor[i][j].splice(0,calendar.hor[i][j].length)
+					case "wipe":
+						if (args.length == 2 && args[1] == "--confirm"){
+							if (message.author.id == config.owner1 || message.author.id == config.owner2){
+								for (var i = 0; i < calendar.hor.length; ++i){
+									for (var j = 0; j < calendar.hor[i].length; ++j){
+										calendar.hor[i][j].splice(0,calendar.hor[i][j].length)
+									}
 								}
+								save_calendar()
+								message.channel.send("Base de datos borrada con éxito")
 							}
-							save_calendar()
-							message.channel.send("Base de datos borrada con éxito")
+							else message.channel.send("Esta acción solo la pueden hacer los propietarios del bot")
 						}
-						else message.channel.send("Esta acción solo la pueden hacer los propietarios del bot")
-					}
-					else{
-						message.channel.send("Borra toda la base de datos. Usa `horario wipe --confirm`. **Esta acción no se puede deshacer**")
-					}
-					break
+						else{
+							message.channel.send("Borra toda la base de datos. Usa `horario wipe --confirm`. **Esta acción no se puede deshacer**")
+						}
+						break
 
-				default:
-					help_message(message)
-					break
+					default:
+						help_message(message)
+						break
+				}
 			}
 		}
 	}
