@@ -2,37 +2,74 @@ const config = require('../data/config.json');
 var calendar = require('../data/calendar.json');
 const fs = require('fs');
 
+const semana = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"]
+
 function help_message(message){
-	message.channel.send("Para ver un listado de las horas a las que habrá gente en el despacho, escribe `horario check` seguido de un día de la semana. Por ejemplo, para ver la lista de los martes, escribe `horario check m`.\nPara ver la lista de personas que estarán en el despacho un día y a una hora determinados, escribe `horario check` seguido de un día de la semana y una hora. Por ejemplo, para ver qué personas habrá el jueves a las 9:00, escribe `horario check j 9`.\nPara añadir los días en que puedes estar por el despacho, escribe `despacho add` seguido de una lista de los días y horas en los que estás. Por ejemplo, para añadir que estarás el lunes a las 18:00, las 19:00 y el viernes a las 9:00, escribe `despacho add l 18 l 19 v 9`.\nPara quitar de la lista días en los que ya no puedes venir, escribe `despacho remove` seguido de una lista de los días y horas en los que estás. Por ejemplo, para quitar los miércoles a las 10:00 y los jueves a las 12, escribe `despacho remove x 10 j 12`.\nLas horas soportadas son de 8 a 21. Como día de la semana solo acepto las iniciales: **l**unes, **m**artes, (**x**)miercoles, **j**ueves, **v**iernes, **s**ábado y **d**omingo.")
+	message.channel.send("**Lista de comandos relativos al horario**\n\n - **`horario check [día]`** - Obtén información sobre a qué horas hay miembros en el despacho ese día. Ejemplo: *horario check lunes*\n - **`horario check [día] [hora]`** - Obtén un listado de las personas que habrá en el despacho ese día a esa hora. Ejemplo: *horario check miércoles 15*\n - **`horario check me`** - Obtén un todas las horas y días que hayas registrado en el bot.\n - **`horario add [día] [hora]`** - Añade una o varias horas en las que estarás en el despacho. Para añadir más de una entrada, escribe las parejas de día y hora una detrás de la otra. Ejemplo: *horario add lunes 9 l 10 viernes 18*\n - **`horario remove [día] [hora]`** - Elimina una o varias horas en las que ya no estarás por el despacho. Para eliminar más de una entrada, escribe las parejas de día y hora una detrás de la otra. Ejemplo: *horario remove miercoles 17 m 18 jueves 14`\n - **`horario wipe`** - Borra completamente la base de datos. Esta operación no puede ser deshecha.\n\nAcepto los días de la semana, con y sin tildes, y sus iniciales: **l**unes, **m**artes, (**x**)miércoles, **j**ueves, **v**iernes, **s**ábado y **d**omingo.\nAcepto horas enteras, de 8 a 21.")
 }
 
 function validate_day(day){
-	if (day.length == 1 && day[0].match(/[lmxjvsd]/)){
 		switch(day) {
 			case 'l':
 				return 0
 				break
+			case 'lunes':
+				return 0
+				break
+
 			case 'm':
 				return 1
 				break
+			case 'martes':
+				return 1
+				break
+
 			case 'x':
 				return 2
 				break
+			case 'miercoles':
+				return 2
+				break
+			case 'miércoles':
+				return 2
+				break
+
 			case 'j':
 				return 3
 				break
+			case 'jueves':
+				return 3
+				break
+
 			case 'v':
 				return 4
 				break
+			case 'viernes':
+				return 4
+				break
+
 			case 's':
 				return 5
 				break
+			case 'sabado':
+				return 5
+				break
+			case 'sábado':
+				return 5
+				break
+
 			case 'd':
 				return 6
 				break
-			}
+			case 'domingo':
+				return 6
+				break
+
+			default:
+				return -1
+				break
 	}
-	else return -1
+	return -1
 }
 
 function validate_hour(hour){
@@ -72,7 +109,7 @@ function add_delete(args, message, addition){
 						if (!addition){
 							calendar.hor[dia][hora].splice(j,1)
 							if(!msgToSend.length) msgToSend = "Se han borrado del horario los siguientes días y horas:"
-							msgToSend = msgToSend.concat("\n **-** ",args[i]," ",args[i+1])
+							msgToSend = msgToSend.concat("\n **-** ",semana[dia]," ",args[i+1])
 						}
 					}
 				}
@@ -80,17 +117,17 @@ function add_delete(args, message, addition){
 					if (!found){
 						calendar.hor[dia][hora].push(message.author.id)
 						if(!msgToSend.length) msgToSend = "Se han añadido al horario los siguientes días y horas:"
-						msgToSend = msgToSend.concat("\n **-** ",args[i]," ",args[i+1])
+						msgToSend = msgToSend.concat("\n **-** ",semana[dia]," ",args[i+1])
 					}
 					else{
 						if (!msgToSend_exis.length) msgToSend_exis = "Ya tienes asignados los siguientes días y horas:"
-						msgToSend_exis = msgToSend_exis.concat("\n **-** ",args[i]," ",args[i+1])
+						msgToSend_exis = msgToSend_exis.concat("\n **-** ",semana[dia]," ",args[i+1])
 					}
 				}
 				if (!addition){
 					if (!found){
 						if (!msgToSend_exis.length) msgToSend_exis = "No tenías asignados los siguientes días y horas:"
-						msgToSend_exis = msgToSend_exis.concat("\n **-** ",args[i]," ",args[i+1])
+						msgToSend_exis = msgToSend_exis.concat("\n **-** ",semana[dia]," ",args[i+1])
 					}
 				}
 			}
@@ -134,12 +171,31 @@ function check_dia_hora(dia, hora, message, client){
 	if (i == 0) message.channel.send("Ese día a esa hora no hay nadie")
 }
 
+function check_me(message){
+	msgToSend = ""
+	for (var i = 0; i < calendar.hor.length; ++i){
+		for (var j = 0; j < calendar.hor[i].length; ++j){
+			for (var k = 0; k < calendar.hor[i][j].length; ++k){
+				if (calendar.hor[i][j][k] == message.author.id){
+					if (!msgToSend.length) msgToSend = "Tengo registrado que vienes los siguientes días y horas:"
+					msgToSend = msgToSend.concat("\n **-** ", semana[i], " a las ", j+8)
+				}
+			}
+		}
+	}
+	if (!msgToSend) msgToSend = "No tengo registrado ninguna aparición tuya"
+	message.channel.send(msgToSend)
+}
+
 function check(args, message, client){
 	switch(args.length){
 		case 2:
-			var dia = validate_day(args[1])
-			if (dia >= 0) check_day(dia, message)
-			else message.channel.send(args[1] + " no es un día válido.")
+			if (args[1] == "me") check_me(message)
+			else{
+				var dia = validate_day(args[1])
+				if (dia >= 0) check_day(dia, message)
+				else message.channel.send(args[1] + " no es un día válido.")
+			}
 			break
 		case 3:
 			var dia = validate_day(args[1])
@@ -148,7 +204,7 @@ function check(args, message, client){
 			else message.channel.send(args[1] + " " + args[2] + " no son un día y hora válidos")
 			break
 		default:
-			message.channel.send("Por favor, envía un único día, y opcionalmente una hora")
+			message.channel.send("Por favor, envía un único día, y opcionalmente una hora; o `me`")
 			break
 	}
 }
@@ -188,7 +244,7 @@ module.exports = {
 						else message.channel.send("Esta acción solo la pueden hacer los propietarios del bot")
 					}
 					else{
-						message.channel.send("Borra toda la base de datos. Usa `horario wipe --confirm`. **Esta acció no se puede deshacer**")
+						message.channel.send("Borra toda la base de datos. Usa `horario wipe --confirm`. **Esta acción no se puede deshacer**")
 					}
 					break
 
